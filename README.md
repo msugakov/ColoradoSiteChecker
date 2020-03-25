@@ -23,6 +23,14 @@ prefixing, e.g. just `python ...`, `pytest`.
 
 The following assumes you use either of two options to run the suggested commands.
 
+### Running the application
+
+To run the first part which checks sites and pushes messages to Kafka queue:
+
+```bash
+./sitechecker/sitechecker.py
+```
+
 ### Testing
 
 Simply run all tests with
