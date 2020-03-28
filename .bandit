@@ -1,0 +1,4 @@
+[bandit]
+targets: .
+exclude: /.venv
+skips: B101

@@ -35,6 +35,18 @@ def mypy(c):
     c.run("mypy")
 
 
-@task(pre=[isort, black, pylama, mypy, pytest])
+@task
+def safety(c):
+    print("running safety - dependencies vulnerability check")
+    c.run("safety check --full-report")
+
+
+@task
+def bandit(c):
+    print("running bandit - code security check")
+    c.run("bandit --recursive --ini .bandit")
+
+
+@task(pre=[isort, black, pylama, safety, bandit, mypy, pytest])
 def all(c):
     pass
