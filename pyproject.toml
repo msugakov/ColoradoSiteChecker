@@ -8,7 +8,7 @@ authors = ["Mikhail Sugakov <sugakov.mikhail@gmail.com>"]
 python = "^3.7"
 aiokafka = "^0.5.2"
 apscheduler = "^3.6.3"
-logzero = "^1.5.0"
+logzero = "^1.5.0"  # logzero instead of loguru because the latter can't format strings with %s
 aiohttp = "^3.6.2"
 
 # A great list of linters and safety checkers for python
@@ -16,7 +16,6 @@ aiohttp = "^3.6.2"
 
 [tool.poetry.dev-dependencies]
 mypy = "^0.770"
-pylama = "^7.7.1"
 black = "^19.10b0"
 isort = "^4.3.21"
 pytest = "^5.4.1"
@@ -26,6 +25,10 @@ pytest-watch = "^4.2.0"
 rope = "^0.16.0"
 safety = "^1.8.7"
 bandit = "^1.6.2"
+wemake-python-styleguide = "^0.14.0"
+dlint = "^0.10.3"
+detect-secrets = "^0.13.1"
+dependency-check = "^0.5.0"
 
 [tool.black]
 line-length = 100

@@ -1,4 +1,6 @@
 [bandit]
 targets: .
 exclude: /.venv
+
+# Can use assert, especially in tests
 skips: B101

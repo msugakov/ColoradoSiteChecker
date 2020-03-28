@@ -2,16 +2,14 @@
 
 import asyncio
 import signal
+import types
 
 import aiohttp
 from apscheduler.events import EVENT_JOB_ERROR
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from logzero import logger
 
-POLLING_SCHEDULE = {
-    "trigger": "interval",
-    "seconds": 3,
-}
+POLLING_SCHEDULE = types.MappingProxyType({"trigger": "interval", "seconds": 3})
 
 
 async def tick() -> None:
@@ -26,27 +24,26 @@ async def read_http(url: str) -> None:
     # and establishing connection.
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
-            print(response.status)
-            print()
+            logger.info(response.status)
 
 
-def setup_scheduler_application():
-    def shutdown_application():
+def setup_scheduler_application():  # noqa: WPS213
+    def shutdown_application():  # noqa:  WPS430
         logger.debug("Shutting down job scheduler")
         scheduler.shutdown(wait=True)
         logger.debug("Stopping event loop")
         asyncio.get_event_loop().stop()
         logger.debug("The application should shut down now")
 
-    def on_job_error(event):
+    def on_job_error(event):  # noqa:  WPS430
         logger.error(
             "Error when executing scheduled job. Shutting down application...",
             exc_info=event.exception,
         )
         shutdown_application()
 
-    def on_signal(signal):
-        logger.info(f"Received signal {signal}. Shutting down application...")
+    def on_signal(signal_code):  # noqa:  WPS430
+        logger.info(f"Received signal {signal_code}. Shutting down application...")
         shutdown_application()
 
     scheduler = AsyncIOScheduler(logger=logger)
@@ -65,7 +62,7 @@ def main():
     scheduler.add_job(tick, **POLLING_SCHEDULE)
     scheduler.start()
     asyncio.get_event_loop().run_forever()
-    print("done")
+    logger.info("done")
 
 
 if __name__ == "__main__":
