@@ -1,6 +1,6 @@
-# Colorad Site Checker
+# Colorado Site Checker
 
-Q: What is this?
+Q: What is this?  
 A: A secrecy project for now.
 
 ## Prerequisites
