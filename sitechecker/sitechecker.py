@@ -2,11 +2,11 @@
 
 import asyncio
 import signal
+import time
 import types
+from datetime import timedelta
 from typing import NamedTuple, Optional
 
-from datetime import timedelta
-import time
 import aiohttp
 from apscheduler.events import EVENT_JOB_ERROR
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -55,7 +55,6 @@ async def read_http(session: aiohttp.ClientSession, url: str) -> HttpReadResult:
     try:
         async with session.get(url) as response:
             end_counter = time.perf_counter()
-            logger.info(response.status)  # TODO: move me
             http_status = response.status
     except Exception as err:
         end_counter = time.perf_counter()
@@ -64,7 +63,7 @@ async def read_http(session: aiohttp.ClientSession, url: str) -> HttpReadResult:
 
     result = HttpReadResult(
         http_status=http_status,
-        regex_matches=None,
+        regex_matches=regex_matches,
         error=error,
         total_time=timedelta(seconds=end_counter - start_counter),
     )
